@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AndroidLab2</string>
+    <string name="app_name">MoviesList</string>
     <string name="main_menu">Menu Główne</string>
     <string name="chosen_movie">Wybrany Film</string>
     <string name="sceny">SCENY</string>
