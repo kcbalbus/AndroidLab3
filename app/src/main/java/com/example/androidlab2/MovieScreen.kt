@@ -1,10 +1,11 @@
 package com.example.androidlab2
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
+import MoviesViewModel
+import android.graphics.Color
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -22,30 +23,38 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.androidlab2.ui.theme.MovieMenuTheme
+import com.example.androidlab2.ui.theme.White
 
-class MovieActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val movie =Movie("a", "bekarty_wojny_cover", "W okupowanej przez nazistów Francji oddział złożony z Amerykanów żydowskiego pochodzenia planuje zamach na Hitlera.", listOf("bekarty_wojny_scene1", "bekarty_wojny_scene2"), listOf("Brad Pitt", "Christopher Waltz"))
-        setContent {
-            MovieMenuTheme {
-                Column {
-                    MovieDesc(movie)
-                    ScenesActorsButtons()
-                    ScenesGrid(movie.getScenesIds())
-                }
 
-            }
+@Composable
+fun MovieScreen (moviesViewModel: MoviesViewModel, moviesState: MoviesState) {
+
+
+    Column {
+        MovieDesc(moviesState.currentMovie)
+
+        ScenesActorsButtons({moviesViewModel.updateScenesOrActorsView(it)} )
+
+        if(moviesState.scenesView.equals("scenes")) {
+            ScenesGrid(moviesState.currentMovie.getScenesIds())
+        } else {
+            ActorsList(moviesState.currentMovie.actors)
         }
+
     }
 }
 
@@ -70,35 +79,34 @@ fun MovieDesc (movie: Movie) {
 }
 
 @Composable
-fun ScenesActorsButtons () {
+fun ScenesActorsButtons (onAction: (String) -> Unit) {
     Row(
         modifier = Modifier
-            .padding(all = 8.dp)
             .fillMaxWidth()
     ) {
         TextButton(
-            onClick = { /*TODO*/ },
+            onClick =  {onAction("scenes")} ,
             modifier = Modifier
                 .fillMaxWidth(0.5f)
-                //.border(1.dp, MaterialTheme.colorScheme.primary)
+                .background(MaterialTheme.colorScheme.primary)
         ) {
             Text(
-                text = "SCENY",
+                text = stringResource(R.string.sceny),
                 style = MaterialTheme.typography.labelLarge,
-
-            )
+                color = White
+                )
         }
 
         TextButton(
-            onClick = { /*TODO*/ },
+            onClick =  {onAction("actors")} ,
             modifier = Modifier
                 .fillMaxWidth()
-
+                .background(MaterialTheme.colorScheme.primary)
         ) {
             Text(
-                text = "AKTORZY",
+                text = stringResource(R.string.aktorzy),
                 style = MaterialTheme.typography.labelLarge,
-
+                color= White
             )
         }
 
@@ -128,27 +136,31 @@ fun ScenesGrid(scenes: List<Int>) {
 fun ActorsList(actors: List<String>) {
     LazyColumn {
         items(actors) { actor ->
-            Text(text = actor)
+            Box(
+                modifier = Modifier.fillMaxWidth(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = actor,
+                    style = MaterialTheme.typography.titleMedium,
+                    textAlign = TextAlign.Center
+                )
+            }
             Divider(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(1.dp),
+                    .height(2.dp),
             )
         }
 
     }
 }
-
+/*
 @Composable
 @Preview
 fun PreviewTest() {
-    val movie =Movie("a", "bekarty_wojny_cover", "W okupowanej przez nazistów Francji oddział złożony z Amerykanów żydowskiego pochodzenia planuje zamach na Hitlera.", listOf("bekarty_wojny_scene1", "bekarty_wojny_scene2"), listOf("Brad Pitt", "Christopher Waltz"))
     MovieMenuTheme {
-        Column {
-            MovieDesc(movie)
-            ScenesActorsButtons()
-            ScenesGrid(movie.getScenesIds())
-        }
+        MovieScreen()
 
     }
-}
+}*/
