@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
 
-data class Movie(val title: String, val cover: String, val description: String, val scenes: List<String>, val actors: List<String>) {
+data class Movie(val title: String, val cover: String, val description: String, val scenes: List<String>, val actors: List<String>, val trailers: List<String>) {
 
     @Composable
     fun getCoverId (): Int {
@@ -22,5 +22,17 @@ data class Movie(val title: String, val cover: String, val description: String, 
         }
 
         return scenesIds.toList()
+    }
+
+    @Composable
+    fun getTrailderIds (): List<Int> {
+        var trailerIds: MutableList<Int> = mutableListOf()
+        val resources = LocalContext.current.resources
+
+        trailers.forEach { trailer ->
+            trailerIds.add(resources.getIdentifier(trailer, "drawable", LocalContext.current.packageName))
+        }
+
+        return trailerIds.toList()
     }
 }
