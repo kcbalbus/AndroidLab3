@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
 
-data class Movie(val title: String, val cover: String, val description: String, val scenes: List<String>, val actors: List<String>, val trailers: List<String>) {
+data class Movie(val title: String, val cover: String, val description: String, val scenes: List<String>, val actors: List<String>, val trailers: List<Trailer>) {
 
     @Composable
     fun getCoverId (): Int {
@@ -30,7 +30,7 @@ data class Movie(val title: String, val cover: String, val description: String, 
         val resources = LocalContext.current.resources
 
         trailers.forEach { trailer ->
-            trailerIds.add(resources.getIdentifier(trailer, "drawable", LocalContext.current.packageName))
+            trailerIds.add(resources.getIdentifier(trailer.file, "raw", LocalContext.current.packageName))
         }
 
         return trailerIds.toList()

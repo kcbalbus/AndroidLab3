@@ -16,15 +16,17 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
-    primary = White,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    primary = DarkPrimary,
+    secondary = DarkSecondary,
+    tertiary = DarkTertiary,
+    onTertiary = DarkTertiaryVariant
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Black,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
+    primary = LightPrimary,
+    secondary = LightSecondary,
+    tertiary = LightTertiary,
+    onTertiary = LightTertiaryVariant
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
@@ -38,10 +40,10 @@ private val LightColorScheme = lightColorScheme(
 )
 
 @Composable
-fun MovieMenuTheme(
+fun MovieTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {

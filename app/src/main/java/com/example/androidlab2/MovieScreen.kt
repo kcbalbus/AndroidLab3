@@ -36,18 +36,20 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.androidlab2.ui.theme.MovieMenuTheme
+import com.example.androidlab2.ui.theme.MovieTheme
 import com.example.androidlab2.ui.theme.White
 
 
 @Composable
-fun MovieScreen (moviesViewModel: MoviesViewModel, moviesState: MoviesState) {
+fun MovieScreen (moviesViewModel: MoviesViewModel, moviesState: MoviesState, navigate: () -> Unit) {
 
 
     Column {
         MovieDesc(moviesState.currentMovie)
 
-        ScenesActorsButtons({moviesViewModel.updateScenesOrActorsView(it)} )
+        TrailersButton(navigate)
+
+        ScenesActorsButtons(moviesState.scenesView, {moviesViewModel.updateScenesOrActorsView(it)} )
 
         if(moviesState.scenesView.equals("scenes")) {
             ScenesGrid(moviesState.currentMovie.getScenesIds())
@@ -79,7 +81,28 @@ fun MovieDesc (movie: Movie) {
 }
 
 @Composable
-fun ScenesActorsButtons (onAction: (String) -> Unit) {
+fun TrailersButton (navigate: () -> Unit) {
+    Row(
+        modifier = Modifier
+        .fillMaxWidth())
+    {
+        TextButton(
+            onClick =  navigate ,
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(MaterialTheme.colorScheme.secondary)
+        ) {
+            Text(
+                text = stringResource(R.string.zwiastuny),
+                style = MaterialTheme.typography.labelLarge,
+                color = White
+            )
+        }
+    }
+}
+
+@Composable
+fun ScenesActorsButtons (scenesState: String, onAction: (String) -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -88,7 +111,7 @@ fun ScenesActorsButtons (onAction: (String) -> Unit) {
             onClick =  {onAction("scenes")} ,
             modifier = Modifier
                 .fillMaxWidth(0.5f)
-                .background(MaterialTheme.colorScheme.primary)
+                .background(if (scenesState.equals("scenes")) MaterialTheme.colorScheme.onTertiary else MaterialTheme.colorScheme.tertiary)
         ) {
             Text(
                 text = stringResource(R.string.sceny),
@@ -101,7 +124,7 @@ fun ScenesActorsButtons (onAction: (String) -> Unit) {
             onClick =  {onAction("actors")} ,
             modifier = Modifier
                 .fillMaxWidth()
-                .background(MaterialTheme.colorScheme.primary)
+                .background(if (scenesState.equals("scenes")) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.onTertiary)
         ) {
             Text(
                 text = stringResource(R.string.aktorzy),
@@ -137,12 +160,14 @@ fun ActorsList(actors: List<String>) {
     LazyColumn {
         items(actors) { actor ->
             Box(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(40.dp),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
                     text = actor,
-                    style = MaterialTheme.typography.titleMedium,
+                    style = MaterialTheme.typography.bodyLarge,
                     textAlign = TextAlign.Center
                 )
             }

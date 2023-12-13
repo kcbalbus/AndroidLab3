@@ -2,7 +2,9 @@
     <string name="app_name">MoviesList</string>
     <string name="main_menu">Menu Główne</string>
     <string name="chosen_movie">Wybrany Film</string>
+    <string name="movies_trailers">Zwiastuny Filmu</string>
     <string name="sceny">SCENY</string>
     <string name="aktorzy">AKTORZY</string>
     <string name="back_button">Powrót</string>
+    <string name="zwiastuny">ZWIASTUNY</string>
 </resources>

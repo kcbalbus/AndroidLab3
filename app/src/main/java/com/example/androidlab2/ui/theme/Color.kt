@@ -12,3 +12,13 @@ val Pink40 = Color(0xFF7D5260)
 
 val White = Color(0xFFFFFFFF)
 val Black = Color(0xA1111111)
+
+val LightPrimary = Color(0xFF4E31AA)
+val LightSecondary = Color(0xFF7752FE)
+val LightTertiary = Color(0xFF8E8FFA)
+val LightTertiaryVariant = Color(0xFFC2D9FF)
+
+val DarkPrimary = Color(0xFF092635)
+val DarkSecondary = Color(0xFF1B4242)
+val DarkTertiary = Color(0xFF5C8374)
+val DarkTertiaryVariant = Color(0xFF9EC8B9)

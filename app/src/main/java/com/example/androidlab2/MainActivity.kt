@@ -29,7 +29,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.androidlab2.ui.theme.MovieMenuTheme
+import com.example.androidlab2.ui.theme.MovieTheme
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -41,7 +41,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            MovieMenuTheme {
+            MovieTheme {
 
                     MoviesApp()
 

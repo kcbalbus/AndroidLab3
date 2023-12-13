@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
@@ -32,6 +33,7 @@ import androidx.navigation.compose.rememberNavController
 enum class AppScreen(@StringRes val title: Int) {
     MainMenu(title = R.string.main_menu),
     Movie(title = R.string.chosen_movie),
+    Trailers(title = R.string.movies_trailers)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -44,9 +46,9 @@ fun MoviesAppBar(
     modifier: Modifier = Modifier
 ) {
     TopAppBar(
-        title = { Text(text = title) },
+        title = { Text(text = title, color = Color.White) },
         colors = TopAppBarDefaults.mediumTopAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer
+            containerColor = MaterialTheme.colorScheme.primary
         ),
         modifier = modifier,
         navigationIcon = {
@@ -54,7 +56,8 @@ fun MoviesAppBar(
                 IconButton(onClick = navigateUp) {
                     Icon(
                         imageVector = Icons.Filled.ArrowBack,
-                        contentDescription = stringResource(R.string.back_button)
+                        contentDescription = stringResource(R.string.back_button),
+                        tint = Color.White
                     )
                 }
             }
@@ -96,7 +99,10 @@ fun MoviesApp(
                 MovieMenu(moviesViewModel, moviesState, {navController.navigate(AppScreen.Movie.name)})
             }
             composable(route = AppScreen.Movie.name) {
-                MovieScreen(moviesViewModel, moviesState)
+                MovieScreen(moviesViewModel, moviesState, {navController.navigate(AppScreen.Trailers.name)})
+            }
+            composable(route = AppScreen.Trailers.name) {
+                TrailersScreen(moviesViewModel, moviesState, LocalContext.current)
             }
         }
     }

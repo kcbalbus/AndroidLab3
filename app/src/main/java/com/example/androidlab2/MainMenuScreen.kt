@@ -27,7 +27,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.androidlab2.ui.theme.MovieMenuTheme
+import com.example.androidlab2.ui.theme.MovieTheme
 
 
 

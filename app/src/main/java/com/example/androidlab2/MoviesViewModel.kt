@@ -3,6 +3,7 @@ import androidx.lifecycle.ViewModel
 import com.example.androidlab2.Movie
 import com.example.androidlab2.MoviesState
 import com.example.androidlab2.R
+import com.example.androidlab2.Trailer
 import com.example.androidlab2.data.allMovies
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -25,6 +26,15 @@ class MoviesViewModel : ViewModel() {
         _moviesState.update { currentState ->
             currentState.copy(
                 currentMovie = movie
+            )
+        }
+
+    }
+
+    fun updateCurrentTrailer(trailer: Trailer){
+        _moviesState.update { currentState ->
+            currentState.copy(
+                currentTrailer = trailer
             )
         }
 
